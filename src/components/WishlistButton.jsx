@@ -1,8 +1,9 @@
-import { useContext } from 'react';
-import { BookContext } from '../context/BookContext';
+import { useContext } from "react";
+import { BookContext } from "../context/BookContext";
 
 const WishlistButton = ({ book }) => {
-  const { isInWishlist, addToWishlist, removeFromWishlist } = useContext(BookContext);
+  const { isInWishlist, addToWishlist, removeFromWishlist } =
+    useContext(BookContext);
   const inWishlist = isInWishlist(book.id);
 
   const handleClick = () => {
@@ -15,7 +16,7 @@ const WishlistButton = ({ book }) => {
 
   return (
     <button onClick={handleClick} className="wishlist-button">
-      {inWishlist ? '💖 Remove from Wishlist' : '🤍 Add to Wishlist'}
+      {inWishlist ? "💖 Remove from Wishlist" : "🤍 Add to Wishlist"}
     </button>
   );
 };
