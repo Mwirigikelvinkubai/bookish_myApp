@@ -1,28 +1,24 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useFetch } from "../hooks/useFetch";  
-import { useBookContext } from "../context/BookContext"; 
+import { useFetch } from "../hooks/useFetch";  // Assuming your custom hook
+import { useBookContext } from "../context/BookContext";  // Assuming this is your BookContext
 
 // Validation schema using Yup
 const validationSchema = Yup.object({
   title: Yup.string().required("Title is required"),
   author: Yup.string().required("Author is required"),
-  genre: Yup.string().optional(),
-  coverImage: Yup.string().url("Must be a valid URL").optional(),
 });
 
 function AddBookForm() {
   const { setBooks } = useBookContext(); // Get the setBooks function from context
-  const { postData, loading, error } = useFetch("http://localhost:3000/books"); // Replace with actual API endpoint
+  const { postData, loading, error } = useFetch("http://localhost:5173/books"); // Replace with actual API endpoint
 
   // Formik initialization
   const formik = useFormik({
     initialValues: {
       title: "",
       author: "",
-      genre: "",
-      coverImage: "",
     },
     validationSchema, // Yup validation schema
     onSubmit: (values, { resetForm }) => {
@@ -71,35 +67,6 @@ function AddBookForm() {
         )}
       </div>
 
-      {/* Genre Input */}
-      <div>
-        <label htmlFor="genre">Genre:</label>
-        <input
-          id="genre"
-          name="genre"
-          type="text"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.genre}
-        />
-      </div>
-
-      {/* Cover Image Input */}
-      <div>
-        <label htmlFor="coverImage">Cover Image URL:</label>
-        <input
-          id="coverImage"
-          name="coverImage"
-          type="text"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.coverImage}
-        />
-        {formik.touched.coverImage && formik.errors.coverImage && (
-          <div className="error">{formik.errors.coverImage}</div>
-        )}
-      </div>
-
       {/* Submit Button */}
       <button type="submit" disabled={loading}>
         {loading ? "Adding..." : "Add Book"}
@@ -112,3 +79,4 @@ function AddBookForm() {
 }
 
 export default AddBookForm;
+
