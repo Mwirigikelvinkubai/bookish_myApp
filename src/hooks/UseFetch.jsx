@@ -10,14 +10,17 @@ const useFetchBooks = (query) => {
 
     //watch query, if a change happens, trigger fetchbooks function
     useEffect(() => {
-        if(!query) return
+        let url = "http://localhost:3001/books"
+        if(query) {
+            url += `?q=${query}`
+        }
 
         const fetchBooks = async() => {
             setIsLoading(true)
             try {
-                const res = await fetch(`https://openlibrary.org/search.json?q=${query}`)
+                const res = await fetch(url)
                 const data = await res.json()
-                setBooks(data.docs)
+                setBooks(data)
                 setError(null)
             } catch(err) {
                 setError("failed to fetch books")
