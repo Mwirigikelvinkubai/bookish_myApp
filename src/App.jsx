@@ -12,7 +12,6 @@ function App() {
     <BookProvider>
       <NavBar />
       <main>
-        {/* You can pass the fetched books and the query setter to the AppRouter */}
         <AppRouter 
           query={query} 
           setQuery={setQuery} 
