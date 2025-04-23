@@ -1,34 +1,42 @@
-//Defining BookContext -> main place containing all shared states
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useEffect } from 'react';
 
-//shared storage available to different components
-const BookContext = createContext()
+export const BookContext = createContext();
 
-//Providing 'shareable' state variables and setter functions for components
-export const BookProvider = ({children}) => {
-    const [wishList, setWishList] = useState([])
-    const [chosenBook, setChosenBook] = useState(null)
+const BookProvider = ({ children }) => {
+  const [books, setBooks] = useState([]);
+  const [wishlist, setWishlist] = useState([]);
 
-    const addBookToWishList = (book) => {
-        setWishList((prev) => [...prev, book])
-    }
+  useEffect(() => {
+    // Placeholder for fetch logic — this would normally call an API or json-server
+    setBooks([]);
+  }, []);
 
-    const dischargeFromWishList = (id) => {
-        setWishList((prev) => prev.filter(book => book.id !== id))
-    }
+  const addToWishlist = (book) => {
+    setWishlist((prev) => [...prev, book]);
+  };
 
-    //defining what will be shared globally 
-    return (
-        <BookContext.Provider 
-            value={{
-                wishList, addBookToWishList,
-                dischargeFromWishList, chosenBook, setChosenBook
-                }}>
-            {children}
-        </BookContext.Provider>
-    )
-}
+  const removeFromWishlist = (bookId) => {
+    setWishlist((prev) => prev.filter((b) => b.id !== bookId));
+  };
 
-//the custom hook to be used without calling props.
-export const useBookContext = () => useContext(BookContext)
+  const isInWishlist = (bookId) => {
+    return wishlist.some((b) => b.id === bookId);
+  };
 
+  return (
+    <BookContext.Provider
+      value={{
+        books,
+        setBooks,
+        wishlist,
+        addToWishlist,
+        removeFromWishlist,
+        isInWishlist,
+      }}
+    >
+      {children}
+    </BookContext.Provider>
+  );
+};
+
+export default BookProvider;
