@@ -27,6 +27,9 @@ const useFetchBooks = (query) => {
         );
         const data = await res.json();
 
+        console.log("API Response:", data); // Debugging line
+
+
         // Handle empty results by setting an appropriate error message
         if (data.docs.length === 0) {
           setError("No books found for this search.");

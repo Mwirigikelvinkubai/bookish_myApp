@@ -4,7 +4,7 @@
 import BookCover from "./BookCover";
 import BookInfo from "./BookInfo";
 import BookLanguages from "./BookLanguages";
-import BookSubjects from "./BookSubjects";
+// import BookSubjects from "./BookSubjects";
 import WishlistButton from "./WishlistButton";
 
 const BookCard = ({ book }) => {
@@ -17,7 +17,7 @@ const BookCard = ({ book }) => {
         year={book.first_publish_year}
       />
       <BookLanguages languages={book.language} />
-      <BookSubjects subjects={book.subject} />
+      {/* <BookSubjects subjects={book.subject} /> */}
       <WishlistButton book={book} />
     </div>
   );
