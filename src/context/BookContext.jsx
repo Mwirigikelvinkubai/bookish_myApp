@@ -1,7 +1,11 @@
 // src/context/BookContext.jsx
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
 
 export const BookContext = createContext();
+
+export const useBookContext = () => {
+  return useContext(BookContext); // Custom hook to use BookContext
+};
 
 export const BookProvider = ({ children }) => {
   const [books, setBooks] = useState([]);
@@ -39,3 +43,5 @@ export const BookProvider = ({ children }) => {
     </BookContext.Provider>
   );
 };
+
+export default BookContext;
