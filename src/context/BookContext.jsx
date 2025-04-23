@@ -1,8 +1,9 @@
+// src/context/BookContext.jsx
 import { createContext, useState, useEffect } from 'react';
 
 export const BookContext = createContext();
 
-const BookProvider = ({ children }) => {
+export const BookProvider = ({ children }) => {
   const [books, setBooks] = useState([]);
   const [wishlist, setWishlist] = useState([]);
 
@@ -38,5 +39,3 @@ const BookProvider = ({ children }) => {
     </BookContext.Provider>
   );
 };
-
-export default BookProvider;

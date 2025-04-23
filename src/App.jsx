@@ -1,6 +1,6 @@
 import NavBar from "./components/Navbar"
 import AppRouter from "./router/AppRouter"
-import {BookProvider} from "./context/BookContext"
+import { BookProvider } from "./context/BookContext";
 
 function App() {
   return (
