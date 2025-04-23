@@ -5,9 +5,7 @@ const BookCard = ({ book }) => {
     <div className="book-card">
       <h3>{book.title}</h3>
       <p>{book.author}</p>
-      <p>{book.publishedDate}</p>
-      <p>{book.description}</p>
-      <p>{book.language}</p>
+
       <WishlistButton book={book} />
     </div>
   );
