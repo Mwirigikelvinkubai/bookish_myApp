@@ -1,17 +1,15 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import BookDetails from './pages/BookDetails';
-import Wishlist from './pages/Wishlist';
+import NavBar from "./components/Navbar"
+import AppRouter from "./router/AppRouter"
+import {BookProvider} from "./context/BookContext"
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/book/:id" element={<BookDetails />} />
-        <Route path="/wishlist" element={<Wishlist />} />
-      </Routes>
-    </Router>
+   <BookProvider>
+    <NavBar />
+    <main>
+      <AppRouter />
+    </main>
+   </BookProvider>
   );
 }
 
