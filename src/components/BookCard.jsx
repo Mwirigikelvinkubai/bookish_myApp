@@ -6,6 +6,7 @@ import BookInfo from "./BookInfo";
 import BookLanguages from "./BookLanguages";
 // import BookSubjects from "./BookSubjects";
 import WishlistButton from "./WishlistButton";
+import ReadOnlineButton from "./ReadOnlineButton";
 
 const BookCard = ({ book }) => {
   return (
@@ -19,6 +20,7 @@ const BookCard = ({ book }) => {
       <BookLanguages languages={book.language} />
       {/* <BookSubjects subjects={book.subject} /> */}
       <WishlistButton book={book} />
+      <ReadOnlineButton book={book} />
     </div>
   );
 };
