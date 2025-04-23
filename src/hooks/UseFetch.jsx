@@ -1,37 +1,49 @@
-//defining a 'shareable' hook for all components
-//to manage all book fetching, state loadings, and error msg
-
 import { useState, useEffect } from "react";
 
 const useFetchBooks = (query) => {
     const [books, setBooks] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [debouncedQuery, setDebouncedQuery] = useState(query);
 
-    //watch query, if a change happens, trigger fetchbooks function
+    // Debouncing the query to avoid rapid API calls
     useEffect(() => {
-        if(!query) return
+        const timer = setTimeout(() => {
+            setDebouncedQuery(query);
+        }, 500); 
+        
+        return () => clearTimeout(timer); // Clear the timeout on cleanup
+    }, [query]);
 
-        const fetchBooks = async() => {
-            setIsLoading(true)
+    // Fetching books based on the debounced query
+    useEffect(() => {
+        if (!debouncedQuery) return;
+
+        const fetchBooks = async () => {
+            setIsLoading(true);
             try {
-                const res = await fetch(`https://openlibrary.org/search.json?q=${query}`)
-                const data = await res.json()
-                setBooks(data.docs)
-                setError(null)
-            } catch(err) {
-                setError("failed to fetch books")
-                setBooks([])
+                const res = await fetch(`https://openlibrary.org/search.json?q=${debouncedQuery}`);
+                const data = await res.json();
+
+                // Handle empty results by setting an appropriate error message
+                if (data.docs.length === 0) {
+                    setError("No books found for this search.");
+                } else {
+                    setBooks(data.docs);
+                    setError(null); // Reset error if there are results
+                }
+            } catch (err) {
+                setError("Failed to fetch books");
+                setBooks([]);
             } finally {
-                setIsLoading(false)
+                setIsLoading(false);
             }
-        }
-        fetchBooks()
-    }, [query])
+        };
 
-    //finally return variables common to all components calling hook 
-    return {books, isLoading, error}
+        fetchBooks();
+    }, [debouncedQuery]);
 
-}
+    return { books, isLoading, error };
+};
 
-export default useFetchBooks
+export default useFetchBooks;
