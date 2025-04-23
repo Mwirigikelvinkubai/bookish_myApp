@@ -1,4 +1,3 @@
-// src/context/BookContext.jsx
 import { createContext, useState, useEffect } from 'react';
 
 export const BookContext = createContext();
