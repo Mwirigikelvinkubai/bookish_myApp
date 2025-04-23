@@ -24,7 +24,7 @@ const Home = () => {
       {isLoading && <p>Loading...</p>}
       {error && <p>{error}</p>}
 
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
         {books.map((book) => (
           <BookCard key={book.key} book={book} />
         ))}
