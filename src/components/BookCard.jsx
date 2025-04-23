@@ -4,7 +4,7 @@ const BookCard = ({ book }) => {
 
   const coverImageUrl = book.cover_i
     ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`
-    : 'https://via.placeholder.com/150x200?text=No+Cover+Available'; // Default placeholder if no cover image
+    : 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/495px-No-Image-Placeholder.svg.png?20200912122019'; // Default placeholder if no cover image
 
   return (
     <div className="book-card">
