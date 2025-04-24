@@ -3,6 +3,7 @@ import Home from "../pages/Home";
 import BookDetails from "../pages/BookDetails";
 import Wishlist from "../pages/Wishlist";
 import PageNotFound from "../pages/PageNotFound";
+import Genre from "../pages/Genre";
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 
@@ -12,6 +13,7 @@ function AppRouter() {
       <Route path="/" element={<Home />} />
       <Route path="/book/:id" element={<BookDetails />} />
       <Route path="/wishlist" element={<Wishlist />} />
+      <Route path="/genre" element={<Genre />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="*" element={<PageNotFound />} />
