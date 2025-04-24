@@ -1,37 +1,36 @@
-import React, { useState } from "react";
-import useFetchBooks from "../hooks/UseFetch"; 
+import { useEffect, useState, useContext } from "react";
+import { BookContext } from "../context/BookContext";
+import useFetchBooks from "../hooks/UseFetch";
+import BookCard from "../components/BookCard";
 
 const Home = () => {
-    const [query, setQuery] = useState("");
-    const { books, isLoading, error } = useFetchBooks(query);
+  const [query, setQuery] = useState("harry potter");
+  const { books, setBooks } = useContext(BookContext);
+  const { books: fetchedBooks, isLoading, error } = useFetchBooks(query);
 
-    return (
-        <div>
-            <h1>Search for Books</h1>
-            <input
-                type="text"
-                placeholder="Search for a book..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-            />
+  // Sync fetched books into context state
+  useEffect(() => {
+    setBooks(fetchedBooks);
+  }, [fetchedBooks]);
 
-            {isLoading && <p>Loading...</p>}
-            {error && <p style={{ color: "red" }}>{error}</p>}
+  return (
+    <div>
+      <input
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search for books..."
+      />
+      {isLoading && <p>Loading...</p>}
+      {error && <p>{error}</p>}
 
-            <div>
-                {books.length > 0 ? (
-                    books.map((book) => (
-                        <div key={book.key}>
-                            <h3>{book.title}</h3>
-                            <p>{book.author_name?.join(", ")}</p>
-                        </div>
-                    ))
-                ) : (
-                    <p>No books found.</p>
-                )}
-            </div>
-        </div>
-    );
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+        {books.map((book) => (
+          <BookCard key={book.key} book={book} />
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default Home;

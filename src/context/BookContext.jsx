@@ -1,5 +1,6 @@
+
 // src/context/BookContext.jsx
-import { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react'
 
 export const BookContext = createContext();
 
@@ -17,15 +18,19 @@ export const BookProvider = ({ children }) => {
   }, []);
 
   const addToWishlist = (book) => {
-    setWishlist((prev) => [...prev, book]);
+    setWishlist((prev) => {
+      const alreadyIn = prev.some((b) => b.key === book.key);
+      if (alreadyIn) return prev;
+      return [...prev, { ...book }];
+    });
   };
 
-  const removeFromWishlist = (bookId) => {
-    setWishlist((prev) => prev.filter((b) => b.id !== bookId));
+  const removeFromWishlist = (bookKey) => {
+    setWishlist((prev) => prev.filter((b) => b.key !== bookKey));
   };
 
-  const isInWishlist = (bookId) => {
-    return wishlist.some((b) => b.id === bookId);
+  const isInWishlist = (bookKey) => {
+    return wishlist.some((b) => b.key === bookKey);
   };
 
   return (

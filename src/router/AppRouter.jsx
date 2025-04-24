@@ -4,7 +4,6 @@ import BookDetails from "../pages/BookDetails";
 import Wishlist from "../pages/Wishlist";
 import PageNotFound from "../pages/PageNotFound"; 
 import GenrePage from "../pages/Genre";
-
 function AppRouter() {
   return (
     <Routes>
