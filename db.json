@@ -1,0 +1,148 @@
+{
+    "books": [
+      {
+        "id": 1,
+        "title": "Pride and Prejudice",
+        "author": "Jane Austen",
+        "first_publish_year": 1813,
+        "isbn": "9780141439518",
+        "cover_url": "https://covers.openlibrary.org/b/isbn/9780141439518-L.jpg"
+      },
+      {
+        "id": 2,
+        "title": "Moby-Dick",
+        "author": "Herman Melville",
+        "first_publish_year": 1851,
+        "isbn": "9780142437247",
+        "cover_url": "https://covers.openlibrary.org/b/isbn/9780142437247-L.jpg"
+      },
+      {
+        "id": 3,
+        "title": "The Great Gatsby",
+        "author": "F. Scott Fitzgerald",
+        "first_publish_year": 1925,
+        "isbn": "9780743273565",
+        "cover_url": "https://covers.openlibrary.org/b/isbn/9780743273565-L.jpg"
+      },
+      {
+        "id": 4,
+        "title": "1984",
+        "author": "George Orwell",
+        "first_publish_year": 1949,
+        "isbn": "9780451524935",
+        "cover_url": "https://covers.openlibrary.org/b/isbn/9780451524935-L.jpg"
+      },
+      {
+        "id": 5,
+        "title": "To Kill a Mockingbird",
+        "author": "Harper Lee",
+        "first_publish_year": 1960,
+        "isbn": "9780061120084",
+        "cover_url": "https://covers.openlibrary.org/b/isbn/9780061120084-L.jpg"
+      },
+      {
+        "id": 6,
+        "title": "War and Peace",
+        "author": "Leo Tolstoy",
+        "first_publish_year": 1869,
+        "isbn": "9780199232765",
+        "cover_url": "https://covers.openlibrary.org/b/isbn/9780199232765-L.jpg"
+      },
+      {
+        "id": 7,
+        "title": "The Odyssey",
+        "author": "Homer",
+        "first_publish_year": -800,
+        "isbn": "9780140268867",
+        "cover_url": "https://covers.openlibrary.org/b/isbn/9780140268867-L.jpg"
+      },
+      {
+        "id": 8,
+        "title": "Crime and Punishment",
+        "author": "Fyodor Dostoevsky",
+        "first_publish_year": 1866,
+        "isbn": "9780140449136",
+        "cover_url": "https://covers.openlibrary.org/b/isbn/9780140449136-L.jpg"
+      },
+      {
+        "id": 9,
+        "title": "Jane Eyre",
+        "author": "Charlotte Brontë",
+        "first_publish_year": 1847,
+        "isbn": "9780142437209",
+        "cover_url": "https://covers.openlibrary.org/b/isbn/9780142437209-L.jpg"
+      },
+      {
+        "id": 10,
+        "title": "Brave New World",
+        "author": "Aldous Huxley",
+        "first_publish_year": 1932,
+        "isbn": "9780060850524",
+        "cover_url": "https://covers.openlibrary.org/b/isbn/9780060850524-L.jpg"
+      },
+      {
+        "id": 11,
+        "title": "The Catcher in the Rye",
+        "author": "J.D. Salinger",
+        "first_publish_year": 1951,
+        "isbn": "9780316769488",
+        "cover_url": "https://covers.openlibrary.org/b/isbn/9780316769488-L.jpg"
+      },
+      {
+        "id": 12,
+        "title": "The Hobbit",
+        "author": "J.R.R. Tolkien",
+        "first_publish_year": 1937,
+        "isbn": "9780261102217",
+        "cover_url": "https://covers.openlibrary.org/b/isbn/9780261102217-L.jpg"
+      },
+      {
+        "id": 13,
+        "title": "Wuthering Heights",
+        "author": "Emily Brontë",
+        "first_publish_year": 1847,
+        "isbn": "9780141439556",
+        "cover_url": "https://covers.openlibrary.org/b/isbn/9780141439556-L.jpg"
+      },
+      {
+        "id": 14,
+        "title": "Anna Karenina",
+        "author": "Leo Tolstoy",
+        "first_publish_year": 1877,
+        "isbn": "9780143035008",
+        "cover_url": "https://covers.openlibrary.org/b/isbn/9780143035008-L.jpg"
+      },
+      {
+        "id": 15,
+        "title": "The Brothers Karamazov",
+        "author": "Fyodor Dostoevsky",
+        "first_publish_year": 1880,
+        "isbn": "9780374528379",
+        "cover_url": "https://covers.openlibrary.org/b/isbn/9780374528379-L.jpg"
+      },
+      {
+        "id": 16,
+        "title": "Les Misérables",
+        "author": "Victor Hugo",
+        "first_publish_year": 1862,
+        "isbn": "9780451419439",
+        "cover_url": "https://covers.openlibrary.org/b/isbn/9780451419439-L.jpg"
+      },
+      {
+        "id": 17,
+        "title": "Don Quixote",
+        "author": "Miguel de Cervantes",
+        "first_publish_year": 1605,
+        "isbn": "9780060934347",
+        "cover_url": "https://covers.openlibrary.org/b/isbn/9780060934347-L.jpg"
+      },
+      {
+        "id": 18,
+        "title": "Frankenstein",
+        "author": "Mary Shelley",
+        "first_publish_year": 1818,
+        "isbn": "9780141439471",
+        "cover_url": "https://covers.openlibrary.org/b/isbn/9780141439471-L.jpg"
+      }
+    ]
+}
