@@ -1,34 +1,52 @@
-//Defining BookContext -> main place containing all shared states
-import { createContext, useState, useContext } from "react";
 
-//shared storage available to different components
-const BookContext = createContext()
+// src/context/BookContext.jsx
+import { createContext, useState, useContext, useEffect } from 'react'
 
-//Providing 'shareable' state variables and setter functions for components
-export const BookProvider = ({children}) => {
-    const [wishList, setWishList] = useState([])
-    const [chosenBook, setChosenBook] = useState(null)
+export const BookContext = createContext();
 
-    const addBookToWishList = (book) => {
-        setWishList((prev) => [...prev, book])
-    }
+export const useBookContext = () => {
+  return useContext(BookContext); // Custom hook to use BookContext
+};
 
-    const dischargeFromWishList = (id) => {
-        setWishList((prev) => prev.filter(book => book.id !== id))
-    }
+export const BookProvider = ({ children }) => {
+  const [books, setBooks] = useState([]);
+  const [wishlist, setWishlist] = useState([]);
 
-    //defining what will be shared globally 
-    return (
-        <BookContext.Provider 
-            value={{
-                wishList, addBookToWishList,
-                dischargeFromWishList, chosenBook, setChosenBook
-                }}>
-            {children}
-        </BookContext.Provider>
-    )
-}
+  useEffect(() => {
+    // Placeholder for fetch logic — this would normally call an API or json-server
+    setBooks([]);
+  }, []);
 
-//the custom hook to be used without calling props.
-export const useBookContext = () => useContext(BookContext)
+  const addToWishlist = (book) => {
+    setWishlist((prev) => {
+      const alreadyIn = prev.some((b) => b.key === book.key);
+      if (alreadyIn) return prev;
+      return [...prev, { ...book }];
+    });
+  };
 
+  const removeFromWishlist = (bookKey) => {
+    setWishlist((prev) => prev.filter((b) => b.key !== bookKey));
+  };
+
+  const isInWishlist = (bookKey) => {
+    return wishlist.some((b) => b.key === bookKey);
+  };
+
+  return (
+    <BookContext.Provider
+      value={{
+        books,
+        setBooks,
+        wishlist,
+        addToWishlist,
+        removeFromWishlist,
+        isInWishlist,
+      }}
+    >
+      {children}
+    </BookContext.Provider>
+  );
+};
+
+export default BookContext;
