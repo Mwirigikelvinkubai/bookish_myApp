@@ -12,6 +12,7 @@ function NavBar() {
       <nav>
         <Link to="/">Home</Link>
         <Link to="/wishlist">Wishlist</Link>
+        <Link to="/genre">Genre</Link>
         {!user ? (
           <>
             <Link to="/login">Login</Link>
