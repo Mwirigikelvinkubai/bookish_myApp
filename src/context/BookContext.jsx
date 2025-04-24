@@ -2,7 +2,7 @@ import { createContext, useState, useContext, useEffect } from 'react';
 import fetchUser from '../api/userAPI/fetchUser';
 import addToUserWishlist from '../api/userAPI/addToUserWishlist';
 import removeFromUserWishlist from '../api/userAPI/removeFromUserWishlist';
-import { useUser } from './UserContext'; // 🔥 pulling in the user context
+import { useUser } from './UserContext'; 
 
 export const BookContext = createContext();
 

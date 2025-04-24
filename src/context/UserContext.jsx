@@ -20,7 +20,7 @@ export const UserProvider = ({ children }) => {
         if (!res.ok) throw new Error("User not found");
         const data = await res.json();
         setUser(data);
-        console.log("Fetched user:", data)
+        console.log("Fetched user:", data);
       } catch (err) {
         console.error("Failed to fetch user:", err);
       } finally {
