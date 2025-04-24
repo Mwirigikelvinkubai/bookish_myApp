@@ -3,15 +3,8 @@
     {
       "id": 1,
       "username": "kane",
-      "password": "password",
-      "wishlist": [
-        {
-          "id": "book_unique_id_from_API",
-          "title": "Book Title",
-          "author": "Author Name",
-          "cover_i": 123456
-        }
-      ]
+      "wishlist": []
     }
-  ]
+  ],
+  "wishlist": []
 }
