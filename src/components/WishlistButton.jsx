@@ -1,16 +1,32 @@
 import { useContext } from "react";
 import { BookContext } from "../context/BookContext";
+import addToUserWishlist from "../api/userAPI/addToUserWishlist";
+import removeFromUserWishlist from "../api/userAPI/removeFromUserWishlist";
 
 const WishlistButton = ({ book }) => {
-  const { isInWishlist, addToWishlist, removeFromWishlist } =
-    useContext(BookContext);
-  const inWishlist = isInWishlist(book.id);
+  const { wishlist, setWishlist, userId } = useContext(BookContext);
 
-  const handleClick = () => {
+  // Check if the book is already in the wishlist
+  const inWishlist = wishlist.some((b) => b.key === book.key);
+
+  // Handle click: add or remove book from wishlist
+  const handleClick = async () => {
     if (inWishlist) {
-      removeFromWishlist(book.id);
+      // Remove from wishlist (both UI and backend)
+      try {
+        await removeFromUserWishlist(userId, book.key);
+        setWishlist(wishlist.filter((b) => b.key !== book.key));
+      } catch (err) {
+        console.error("Error removing from wishlist:", err);
+      }
     } else {
-      addToWishlist(book);
+      // Add to wishlist (both UI and backend)
+      try {
+        await addToUserWishlist(userId, book);
+        setWishlist([...wishlist, { ...book }]);
+      } catch (err) {
+        console.error("Error adding to wishlist:", err);
+      }
     }
   };
 

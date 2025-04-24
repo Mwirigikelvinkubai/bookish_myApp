@@ -4,7 +4,7 @@ import useFetchBooks from "../hooks/UseFetch";
 import BookCard from "../components/BookCard";
 
 const Home = () => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("three body problem");
   const { books, setBooks } = useContext(BookContext);
   const { books: fetchedBooks, isLoading, error } = useFetchBooks(query);
 

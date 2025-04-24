@@ -14,7 +14,7 @@ const Wishlist = () => {
       <h2>📚 Your Wishlist</h2>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
         {wishlist.map((book) => (
-          <BookCard key={book.id} book={book} />
+          <BookCard key={book.key} book={book} />
         ))}
       </div>
     </div>

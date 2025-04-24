@@ -2,6 +2,7 @@ import { createContext, useState, useContext, useEffect } from 'react';
 import fetchUser from '../api/userAPI/fetchUser';
 import addToUserWishlist from '../api/userAPI/addToUserWishlist';
 import removeFromUserWishlist from '../api/userAPI/removeFromUserWishlist';
+import { useUser } from './UserContext'; // 🔥 pulling in the user context
 
 export const BookContext = createContext();
 
@@ -10,13 +11,16 @@ export const useBookContext = () => useContext(BookContext);
 export const BookProvider = ({ children }) => {
   const [books, setBooks] = useState([]);
   const [wishlist, setWishlist] = useState([]);
-  const [userId, setUserId] = useState(1); // For now, assume a static logged-in user
 
-  // Fetch user's wishlist on load
+  const { user } = useUser(); // grabbing user from context
+  const userId = user?.id;     // clean fallback if user isn’t loaded yet
+
   useEffect(() => {
     const loadUserWishlist = async () => {
+      if (!userId) return; // wait until userId is available
       try {
         const user = await fetchUser(userId);
+        console.log("Loaded wishlist:", user.wishlist); 
         setWishlist(user.wishlist || []);
       } catch (err) {
         console.error("Failed to load user wishlist:", err);
@@ -25,8 +29,11 @@ export const BookProvider = ({ children }) => {
     loadUserWishlist();
   }, [userId]);
 
-  // Add to wishlist and persist to server
   const addToWishlist = async (book) => {
+    if (!userId) {
+      console.error("User is not logged in.");
+      return;
+    }
     const alreadyIn = wishlist.some((b) => b.key === book.key);
     if (alreadyIn) return;
 
@@ -36,17 +43,21 @@ export const BookProvider = ({ children }) => {
     } catch (err) {
       console.error("Error adding book to wishlist:", err);
     }
-  };
+};
 
-  // Remove from wishlist and server
-  const removeFromWishlist = async (bookKey) => {
+const removeFromWishlist = async (bookKey) => {
+    if (!userId) {
+      console.error("User is not logged in.");
+      return;
+    }
     try {
       await removeFromUserWishlist(userId, bookKey);
       setWishlist((prev) => prev.filter((b) => b.key !== bookKey));
     } catch (err) {
       console.error("Error removing book from wishlist:", err);
     }
-  };
+};
+
 
   const isInWishlist = (bookKey) => wishlist.some((b) => b.key === bookKey);
 
@@ -56,11 +67,11 @@ export const BookProvider = ({ children }) => {
         books,
         setBooks,
         wishlist,
+        setWishlist,
         addToWishlist,
         removeFromWishlist,
         isInWishlist,
         userId,
-        setUserId,
       }}
     >
       {children}
