@@ -4,6 +4,7 @@ import BookDetails from "../pages/BookDetails";
 import Wishlist from "../pages/Wishlist";
 import PageNotFound from "../pages/PageNotFound";
 import Genre from "../pages/Genre";
+import '../components/App.css';  
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 
