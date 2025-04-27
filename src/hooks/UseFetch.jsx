@@ -23,7 +23,7 @@ const useFetchBooks = (query) => {
       setIsLoading(true);
 
       try {
-        const res = await fetch(`https://openlibrary.org/search.json?title=${debouncedQuery}&author=${debouncedQuery}`);
+        const res = await fetch(`https://openlibrary.org/search.json?q=${debouncedQuery}`);
         const data = await res.json();
 
         if (data.docs.length === 0) {
