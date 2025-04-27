@@ -2,18 +2,25 @@ import { createContext, useState, useContext, useEffect } from 'react';
 import fetchUser from '../api/userAPI/fetchUser';
 import addToUserWishlist from '../api/userAPI/addToUserWishlist';
 import removeFromUserWishlist from '../api/userAPI/removeFromUserWishlist';
-import { useUser } from './UserContext'; 
+import { useUser } from './UserContext';
+import useFetchBooks from '../hooks/UseFetch'; 
 
 export const BookContext = createContext();
 
 export const useBookContext = () => useContext(BookContext);
 
 export const BookProvider = ({ children }) => {
+  const [query, setQuery] = useState('');
+  const { books: fetchedBooks, isLoading, error } = useFetchBooks(query);
   const [books, setBooks] = useState([]);
   const [wishlist, setWishlist] = useState([]);
 
   const { user } = useUser(); // grabbing user from context
   const userId = user?.id;     // clean fallback if user isn’t loaded yet
+
+  useEffect(() => {
+    setBooks(fetchedBooks);
+  }, [fetchedBooks]);
 
   useEffect(() => {
     const loadUserWishlist = async () => {
@@ -66,6 +73,10 @@ const removeFromWishlist = async (bookKey) => {
       value={{
         books,
         setBooks,
+        query,
+        setQuery,
+        isLoading,
+        error,
         wishlist,
         setWishlist,
         addToWishlist,
@@ -79,4 +90,3 @@ const removeFromWishlist = async (bookKey) => {
   );
 };
 
-export default BookContext;
