@@ -1,18 +1,9 @@
-import { useEffect, useState, useContext } from "react";
-import { BookContext } from "../context/BookContext";
-import useFetchBooks from "../hooks/UseFetch";
+import { useBookContext } from "../context/BookContext";
 import BookGrid from "../components/BookGrid";
 import BookCard from "../components/BookCard";
 
 const Home = () => {
-  const [query, setQuery] = useState("three body problem");
-  const { books, setBooks } = useContext(BookContext);
-  const { books: fetchedBooks, isLoading, error } = useFetchBooks(query);
-
-  // Sync fetched books into context state
-  useEffect(() => {
-    setBooks(fetchedBooks);
-  }, [fetchedBooks]);
+  const { books, query, setQuery, isLoading, error } = useBookContext()
 
   return (
     <div className="p-6">
