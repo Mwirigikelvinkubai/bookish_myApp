@@ -1,30 +1,15 @@
-import { useEffect, useState, useContext } from "react";
-import { BookContext } from "../context/BookContext";
-import useFetchBooks from "../hooks/UseFetch";
+import React from "react";
+import { useBookContext } from "../context/BookContext";
 import BookGrid from "../components/BookGrid";
 import BookCard from "../components/BookCard";
+import Search from "../components/Search";
 
 const Home = () => {
-  const [query, setQuery] = useState("three body problem");
-  const { books, setBooks } = useContext(BookContext);
-  const { books: fetchedBooks, isLoading, error } = useFetchBooks(query);
-
-  // Sync fetched books into context state
-  useEffect(() => {
-    setBooks(fetchedBooks);
-  }, [fetchedBooks]);
+  const { books, query, setQuery, isLoading, error } = useBookContext()
 
   return (
     <div className="p-6">
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-800 text-white">
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search for books..."
-          className="px-4 py-2 rounded-lg w-full max-w-md text-black"
-        />
-      </div>
+      <Search query={query} setQuery={setQuery} />
 
       {isLoading && <p className="text-center text-gray-400">Loading...</p>}
       {error && <p className="text-center text-red-500">{error}</p>}

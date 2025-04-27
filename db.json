@@ -220,6 +220,15 @@
           "title": "The Three Body Problem"
         }
       ]
+    },
+    {
+      "id": "1994",
+      "username": "harry",
+      "email": "harry@gmail.com",
+      "password": "password",
+      "firstName": "harry",
+      "lastName": "doe",
+      "wishlist": []
     }
   ],
   "wishlist": []
