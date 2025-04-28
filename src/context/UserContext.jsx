@@ -16,7 +16,7 @@ export const UserProvider = ({ children }) => {
       }
 
       try {
-        const res = await fetch(`http://localhost:3001/users/${userId}`);
+        const res = await fetch(`https://680f048c67c5abddd193916e.mockapi.io/bookishV1/users/${userId}`);
         if (!res.ok) throw new Error("User not found");
         const data = await res.json();
         setUser(data);

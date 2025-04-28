@@ -1,92 +1,94 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup"
 import { useUser } from "../context/UserContext"; 
+import addUser from "../api/userAPI/addUser";
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");  // Added username field
-  const [firstName, setFirstName] = useState(""); // Added firstName field
-  const [lastName, setLastName] = useState(""); // Added lastName field
-  const { setUser } = useUser(); // Set user context after registration
-  const navigate = useNavigate();
+  const {setUser} = useUser()
+  const navigate = useNavigate()
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
+  //creating validation scheme with Yup
+  const validationSchema = Yup.object({
+    username: Yup.string().required("Username is required"),
+    email: Yup.string().email("Invalid email format").required("Email is required"),
+    password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+    firstName: Yup.string().required("First name is required"),
+    lastName: Yup.string().required("Last name is required"),
+  });
 
-    const userData = {
-      username,
-      email,
-      password,
-      firstName,
-      lastName,
-      wishlist: [], // New users will start with an empty wishlist
-    };
-
+  const handleRegister = async (values, {setSubmitting}) => {
+  
     try {
-      const response = await fetch("http://localhost:3001/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
+      const newUser = await addUser({...values, wishlist: []})
+
+      setUser(newUser) //saving new user in context
+
+      toast.success("Registration successful! Welcome 👋", {
+        position: "top-center",
+        autoClose: 3000,
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to register user");
-      }
-
-      const newUser = await response.json(); // Response from the server (newly created user)
-      setUser(newUser); // Set the user in context
-
-      // Redirect to wishlist page or home page
-      navigate("/wishlist");
-    } catch (err) {
-      console.error("Error registering user:", err);
-    }
-  };
+      navigate("/") //navigate user to home page
+        } catch (err) {
+          console.error("error registering user:", err)
+          toast.error("Registration failed. Please try again.", {
+            position: "top-center",
+          });
+        } finally {
+          setSubmitting(false) //trigger formik to stop spinning
+        }
+  }; 
 
   return (
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleRegister}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <input
-          type="text"
-          placeholder="First Name"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Last Name"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-          required
-        />
-        <button type="submit">Register</button>
-      </form>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-800 text-white" >
+      <h2 className="text-2xl mb-4">Register</h2>
+
+      <Formik
+        initialValues={{
+          username: "",
+          email: "",
+          password: "",
+          firstName: "",
+          lastName: "",
+        }}
+        validationSchema={validationSchema}
+        onSubmit={handleRegister}
+      >
+        
+        <Form className="flex flex-col gap-4 w-full max-w-md">
+          <div>
+            <Field name="username" type="text" placeholder="Username" className="p-2 rounded w-full text-black" />
+            <ErrorMessage name="username" component="div" className="text-red-500 text-sm" />
+          </div>
+
+          <div>
+            <Field name="email" type="email" placeholder="Email" className="p-2 rounded w-full text-black" />
+            <ErrorMessage name="email" component="div" className="text-red-500 text-sm" />
+          </div>
+
+          <div>
+            <Field name="password" type="password" placeholder="Password" className="p-2 rounded w-full text-black" />
+            <ErrorMessage name="password" component="div" className="text-red-500 text-sm" />
+          </div>
+
+          <div>
+            <Field name="firstName" type="text" placeholder="First Name" className="p-2 rounded w-full text-black" />
+            <ErrorMessage name="firstName" component="div" className="text-red-500 text-sm" />
+          </div>
+
+          <div>
+            <Field name="lastName" type="text" placeholder="Last Name" className="p-2 rounded w-full text-black" />
+            <ErrorMessage name="lastName" component="div" className="text-red-500 text-sm" />
+          </div>
+
+          <button type="submit" className="bg-blue-500 hover:bg-blue-600 p-2 rounded text-white">
+            Register
+          </button>
+        </Form>
+      </Formik>
     </div>
   );
 };

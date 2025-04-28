@@ -1,12 +1,12 @@
 const removeFromUserWishlist = async (userId, bookKey) => {
     try {
-      const res = await fetch(`http://localhost:3001/users/${userId}`);
+      const res = await fetch(`https://680f048c67c5abddd193916e.mockapi.io/bookishV1/users/${userId}`);
       if (!res.ok) throw new Error("Failed to fetch user");
       const user = await res.json();
   
       const updatedWishlist = (user.wishlist || []).filter(book => book.key !== bookKey);
   
-      const patchRes = await fetch(`http://localhost:3001/users/${userId}`, {
+      const patchRes = await fetch(`https://680f048c67c5abddd193916e.mockapi.io/bookishV1/users/${userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -18,7 +18,6 @@ const removeFromUserWishlist = async (userId, bookKey) => {
     } catch (err) {
       throw new Error("Failed to remove book from wishlist");
     }
-  };
-  
-  export default removeFromUserWishlist;
-  
+};
+
+export default removeFromUserWishlist;

@@ -1,5 +1,5 @@
 const addUser = async (newUser) => {
-    const res = await fetch('http://localhost:3001/users', {
+    const res = await fetch('https://680f048c67c5abddd193916e.mockapi.io/bookishV1/users', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -12,4 +12,4 @@ const addUser = async (newUser) => {
   };
   
   export default addUser;
-  
+ 
