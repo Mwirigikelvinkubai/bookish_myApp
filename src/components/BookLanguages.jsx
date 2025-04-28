@@ -15,24 +15,26 @@ const BookLanguages = ({ languages }) => {
   }, [languages]);
 
   return (
-    <div>
+    <div className="text-white">
       <strong>Language:</strong>{" "}
       {sortedLangs.length > 0 ? (
         <select
           value={selectedLang}
           onChange={(e) => setSelectedLang(e.target.value)}
+          className="bg-gray-800 text-white border border-gray-600 rounded-lg p-2 mt-2"
         >
           {sortedLangs.map((lang, index) => (
-            <option key={index} value={lang}>
+            <option key={index} value={lang} className="bg-gray-800">
               {lang.toUpperCase()}
             </option>
           ))}
         </select>
       ) : (
-        "Not specified"
+        <span>Not specified</span>
       )}
     </div>
   );
 };
 
 export default BookLanguages;
+
