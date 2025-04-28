@@ -12,4 +12,4 @@ const addUser = async (newUser) => {
   };
   
   export default addUser;
-  
+ 

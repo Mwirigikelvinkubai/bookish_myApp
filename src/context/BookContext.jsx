@@ -1,40 +1,45 @@
 import { createContext, useState, useContext, useEffect } from 'react';
-import fetchUser from '../api/userAPI/fetchUser';
-import addToUserWishlist from '../api/userAPI/addToUserWishlist';
-import removeFromUserWishlist from '../api/userAPI/removeFromUserWishlist';
-import { useUser } from './UserContext';
-import useFetchBooks from '../hooks/UseFetch'; 
+import fetchUser from '../api/userAPI/fetchUser';  
+import addToUserWishlist from '../api/userAPI/addToUserWishlist';  
+import removeFromUserWishlist from '../api/userAPI/removeFromUserWishlist';  
+import { useUser } from './UserContext'; 
 
 export const BookContext = createContext();
 
 export const useBookContext = () => useContext(BookContext);
 
 export const BookProvider = ({ children }) => {
-  const [query, setQuery] = useState('');
-  const { books: fetchedBooks, isLoading, error } = useFetchBooks(query);
   const [books, setBooks] = useState([]);
   const [wishlist, setWishlist] = useState([]);
 
-  const { user } = useUser(); // grabbing user from context
-  const userId = user?.id;     // clean fallback if user isn’t loaded yet
+  const { user } = useUser();
+  const userId = user?.id;
 
   useEffect(() => {
-    setBooks(fetchedBooks);
-  }, [fetchedBooks]);
+    if (!userId) return; // Guard clause to ensure userId exists
 
-  useEffect(() => {
     const loadUserWishlist = async () => {
-      if (!userId) return; // wait until userId is available
       try {
-        const user = await fetchUser(userId);
-        console.log("Loaded wishlist:", user.wishlist); 
-        setWishlist(user.wishlist || []);
-      } catch (err) {
-        console.error("Failed to load user wishlist:", err);
+        const userId = user.id; // Ensure `user.id` is defined
+        if (!userId) {
+          throw new Error("User ID is not available.");
+        }
+    
+        const response = await fetch(`https://680f048c67c5abddd193916e.mockapi.io/bookishV1/users/${userId}`);
+        
+        if (!response.ok) {
+          throw new Error("Failed to fetch user data");
+        }
+    
+        const userData = await response.json();
+        // Process user data...
+      } catch (error) {
+        console.error("Failed to load user wishlist:", error);
       }
     };
+    
     loadUserWishlist();
-  }, [userId]);
+  }, [userId]); // Re-run when userId changes
 
   const addToWishlist = async (book) => {
     if (!userId) {
@@ -45,26 +50,25 @@ export const BookProvider = ({ children }) => {
     if (alreadyIn) return;
 
     try {
-      await addToUserWishlist(userId, book);
+      await addToUserWishlist(userId, book); 
       setWishlist((prev) => [...prev, { ...book }]);
     } catch (err) {
       console.error("Error adding book to wishlist:", err);
     }
-};
+  };
 
-const removeFromWishlist = async (bookKey) => {
+  const removeFromWishlist = async (bookKey) => {
     if (!userId) {
       console.error("User is not logged in.");
       return;
     }
     try {
-      await removeFromUserWishlist(userId, bookKey);
+      await removeFromUserWishlist(userId, bookKey); 
       setWishlist((prev) => prev.filter((b) => b.key !== bookKey));
     } catch (err) {
       console.error("Error removing book from wishlist:", err);
     }
-};
-
+  };
 
   const isInWishlist = (bookKey) => wishlist.some((b) => b.key === bookKey);
 
@@ -73,10 +77,6 @@ const removeFromWishlist = async (bookKey) => {
       value={{
         books,
         setBooks,
-        query,
-        setQuery,
-        isLoading,
-        error,
         wishlist,
         setWishlist,
         addToWishlist,
@@ -90,3 +90,4 @@ const removeFromWishlist = async (bookKey) => {
   );
 };
 
+export default BookContext;

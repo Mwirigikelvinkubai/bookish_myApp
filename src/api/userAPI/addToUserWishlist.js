@@ -18,7 +18,6 @@ const addToUserWishlist = async (userId, book) => {
     } catch (err) {
       throw new Error("Failed to add book to wishlist");
     }
-  };
-  
-  export default addToUserWishlist;
-  
+};
+
+export default addToUserWishlist;

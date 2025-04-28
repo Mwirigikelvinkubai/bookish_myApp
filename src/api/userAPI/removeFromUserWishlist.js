@@ -18,7 +18,6 @@ const removeFromUserWishlist = async (userId, bookKey) => {
     } catch (err) {
       throw new Error("Failed to remove book from wishlist");
     }
-  };
-  
-  export default removeFromUserWishlist;
-  
+};
+
+export default removeFromUserWishlist;

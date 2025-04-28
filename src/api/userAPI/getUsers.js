@@ -8,5 +8,3 @@ const getUsers = async (username) => {
 };
 
 export default getUsers;
-
-  
