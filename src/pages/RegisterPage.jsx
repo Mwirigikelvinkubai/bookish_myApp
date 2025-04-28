@@ -4,6 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup"
 import { useUser } from "../context/UserContext"; 
 import addUser from "../api/userAPI/addUser";
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
   const {setUser} = useUser()
@@ -24,9 +25,18 @@ const RegisterPage = () => {
       const newUser = await addUser({...values, wishlist: []})
 
       setUser(newUser) //saving new user in context
+
+      toast.success("Registration successful! Welcome 👋", {
+        position: "top-center",
+        autoClose: 3000,
+      });
+
       navigate("/") //navigate user to home page
         } catch (err) {
           console.error("error registering user:", err)
+          toast.error("Registration failed. Please try again.", {
+            position: "top-center",
+          });
         } finally {
           setSubmitting(false) //trigger formik to stop spinning
         }
