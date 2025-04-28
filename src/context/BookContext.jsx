@@ -20,12 +20,24 @@ export const BookProvider = ({ children }) => {
 
     const loadUserWishlist = async () => {
       try {
-        const userData = await fetchUser(userId); 
-        setWishlist(userData.wishlist || []);
-      } catch (err) {
-        console.error("Failed to load user wishlist:", err);
+        const userId = user.id; // Ensure `user.id` is defined
+        if (!userId) {
+          throw new Error("User ID is not available.");
+        }
+    
+        const response = await fetch(`https://680f048c67c5abddd193916e.mockapi.io/bookishV1/users/${userId}`);
+        
+        if (!response.ok) {
+          throw new Error("Failed to fetch user data");
+        }
+    
+        const userData = await response.json();
+        // Process user data...
+      } catch (error) {
+        console.error("Failed to load user wishlist:", error);
       }
     };
+    
     loadUserWishlist();
   }, [userId]); // Re-run when userId changes
 
