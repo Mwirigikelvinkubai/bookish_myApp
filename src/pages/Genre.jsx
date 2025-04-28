@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import GenreButton from '../components/GenreButton';
 import useFetchBooks from '../hooks/UseFetch';
-import ReadOnlineButton from '../components/ReadOnlineButton'; // Import ReadOnlineButton
-import WishlistButton from '../components/WishlistButton'; // Import WishlistButton
-import BookInfo from '../components/BookInfo'; // Import BookInfo
+import ReadOnlineButton from '../components/ReadOnlineButton';
+import WishlistButton from '../components/WishlistButton';
+import BookInfo from '../components/BookInfo';
 import BookLanguages from '../components/BookLanguages';
 
 const genres = [
@@ -28,58 +28,59 @@ const genres = [
 const Genre = () => {
   const [selectedGenre, setSelectedGenre] = useState(null);
   
-  const { books, isLoading, error } = useFetchBooks(
-    selectedGenre ? `subject=${selectedGenre}` : null
-  );
+  const { books, isLoading, error } = useFetchBooks(selectedGenre || null);
 
   return (
-    <div className="genre-container">
-      <h2>Genres</h2>
-      <div className="genre-buttons flex flex-wrap gap-4">
+    <div className="p-6 min-h-screen bg-gray-900 text-white">
+      <h2 className="text-3xl font-bold mb-6">Genres</h2>
+
+      <div className="flex flex-wrap gap-9 mb-8">
         {genres.map(({ label, subject }) => (
           <GenreButton
             key={subject}
             genre={label}
             onClick={() => setSelectedGenre(subject)}
-            className="bg-gray-800 text-white rounded-full px-6 py-2 hover:bg-red-600 transition-colors duration-300"
+            className="bg-gray-700 hover:bg-red-600 text-white rounded-full px-6 py-2 transition-all duration-300"
           />
         ))}
       </div>
 
       {selectedGenre && (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6rem' }}>
-          <h3>{selectedGenre} Books</h3>
-          {isLoading && <p>Loading...</p>}
-          {error && <p style={{ color: 'red' }}>{error}</p>}
-          {books.length > 0 ? (
-            books.map((book) => (
-              <div key={book.key} className="book-card">
-                {book.cover_i && (
-                  <img
-                    src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
-                    alt={book.title}
-                    className="book-cover"
-                  />
-                )}
+        <>
+          <h3 className="text-2xl font-semibold mb-4">{selectedGenre} Books</h3>
 
-                {/* Use the BookInfo component here */}
-                <BookInfo 
-                  title={book.title} 
-                  authors={book.author_name} 
-                  year={book.first_publish_year}
-                />
-                <BookLanguages languages={book.language} />
-                {/* Add Read Online Button */}
-                <ReadOnlineButton book={book} />
+          {isLoading && <p className="text-center text-gray-400">Loading...</p>}
+          {error && <p className="text-center text-red-500">{error}</p>}
 
-                {/* Add Wishlist Button */}
-                <WishlistButton book={book} />
-              </div>
-            ))
-          ) : (
-            <p>No books found in this genre.</p>
-          )}
-        </div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "5rem" }}>
+            {books.length > 0 ? (
+              books.map((book) => (
+                <div
+                  key={book.key}
+                  className="bg-gray-800 p-4 gap-x-5 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center"
+                >
+                  {book.cover_i && (
+                    <img
+                      src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
+                      alt={book.title}
+                      className="h-48 w-auto rounded-md mb-4"
+                    />
+                  )}
+
+                  <BookInfo title={book.title} authors={book.author_name} year={book.first_publish_year} />
+                  <BookLanguages languages={book.language} />
+
+                  <div className="flex gap-2 mt-4">
+                    <ReadOnlineButton book={book} />
+                    <WishlistButton book={book} />
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className="text-center text-gray-400">No books found in this genre.</p>
+            )}
+          </div>
+        </>
       )}
     </div>
   );

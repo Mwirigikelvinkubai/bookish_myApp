@@ -15,14 +15,14 @@ const Home = () => {
   }, [fetchedBooks]);
 
   return (
-    <div className="p-6">
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-800 text-white">
+    <div className="min-h-screen flex flex-col bg-gray-800 text-white">
+      <div className="flex justify-center my-8">
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search for books..."
-          className="px-4 py-2 rounded-lg w-full max-w-md text-black"
+          className="w-32 px-4 py-2 rounded-lg w-full max-w-md text-black"
         />
       </div>
 
