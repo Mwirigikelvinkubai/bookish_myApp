@@ -3,6 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Reset and Base Styles */
 * {
   margin: 0;
   padding: 0;
@@ -11,24 +12,29 @@
 
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #141414;
-  color: #fff;
+  background-color: #0b0b0b;
+  color: #ffffff;
   line-height: 1.5;
+  min-height: 100vh;
 }
 
+/* Headings */
 h1, h2, h3 {
   font-family: 'Roboto', sans-serif;
   font-weight: 700;
+  color: #ffffff;
 }
 
+/* Links */
 a {
   text-decoration: none;
   color: inherit;
 }
 
+/* Header */
 header {
-  background-color: #141414;
-  padding: 20px;
+  background-color: #0b0b0b;
+  padding: 20px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -36,128 +42,225 @@ header {
 
 header h2 {
   color: #e50914;
-  font-size: 30px;
+  font-size: 32px;
+  letter-spacing: 2px;
 }
 
+/* Navigation */
 nav {
   display: flex;
-  gap: 20px;
+  gap: 30px;
 }
 
 nav a {
-  color: #fff;
-  font-weight: bold;
+  color: #e5e5e5;
+  font-weight: 500;
   text-transform: uppercase;
-  font-size: 14px;
-  transition: color 0.3s;
+  font-size: 13px;
+  transition: color 0.3s ease;
 }
 
 nav a:hover {
   color: #e50914;
 }
 
+/* Main Content */
 main {
-  padding: 40px;
+  padding: 60px 40px;
 }
 
-.book-card {
+/* Search Bar Container */
+.search-bar-container {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  background-color: #222;
-  border-radius: 10px;
-  width: 200px;
-  margin: 10px;
-  transition: transform 0.3s;
+  gap: 10px; /* Adds space between the input and button */
+  margin-bottom: 20px;
 }
 
-.book-card:hover {
+/* Search Input Styling */
+.search-bar-container input[type="text"] {
+  width: 100%;
+  max-width: 500px; /* Controls the max width for larger screens */
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: 2px solid #e50914;
+  color: #ffffff;
+  background-color: #181818;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover and Focus Effects for Input */
+.search-bar-container input[type="text"]:hover {
+  transform: scale(1.02);
+}
+
+.search-bar-container input[type="text"]:focus {
+  outline: none;
+  border-color: #b20710;
+  box-shadow: 0 0 5px rgba(229, 9, 20, 0.8);
+}
+
+/* Search Button Styling */
+.search-bar-container button {
+  background-color: #e50914;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.search-bar-container button:hover {
+  background-color: #b20710;
   transform: scale(1.05);
 }
 
-.book-card img {
-  width: 100%;
-  border-radius: 10px 10px 0 0;
-}
-
-.book-info {
-  padding: 10px;
-}
-
-.book-info h3 {
+/* Loading and Error Messages */
+p {
   font-size: 16px;
-  color: #fff;
-}
-
-.book-info p {
-  font-size: 14px;
-  color: #ccc;
-}
-
-button {
-  background-color: #e50914;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  font-size: 14px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-button:hover {
-  background-color: #b20710;
-}
-
-.genre-buttons, .wishlist-page, .genre-page {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-}
-
-.genre-button {
-  background-color: #333;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  font-size: 14px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.genre-button:hover {
-  background-color: #e50914;
-}
-
-footer {
-  background-color: #141414;
-  color: #fff;
+  color: #e50914;
   text-align: center;
-  padding: 20px;
 }
 
-footer p {
-  font-size: 14px;
-}
-
-@media (max-width: 768px) {
-  .book-card {
-    width: 100%;
-    max-width: 300px;
-  }
-
-  nav {
-    flex-direction: column;
-    gap: 10px;
-  }
-}
-
+/* Book Card Container */
 .book-card-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 24px;
+  gap: 30px;
   padding: 2rem;
+}
+
+.book-card {
+  background-color: #181818;
+  border-radius: 12px;
+  width: 220px;
+  max-width: 100%; /* Ensures the card doesn't overflow */
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  animation: fadeIn 0.8s ease 0s 1 normal forwards;
+}
+
+.book-card:hover {
+  transform: scale(1.08);
+  box-shadow: 0 8px 20px rgba(229, 9, 20, 0.3);
+}
+
+.book-card img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+}
+
+/* Book Info */
+.book-info {
+  padding: 15px;
+  text-align: center;
+}
+
+.book-info h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.book-info p {
+  font-size: 14px;
+  color: #b3b3b3;
+}
+
+/* Buttons */
+button, .genre-button {
+  background-color: #e50914;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover, .genre-button:hover {
+  background-color: #b20710;
+}
+
+/* Genre Buttons Layout */
+.genre-buttons, .wishlist-page, .genre-page {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .search-bar-container {
+    margin-top: 20px;
+  }
+
+  .search-bar-container input[type="text"] {
+    width: 90%;
+    max-width: 350px;
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+
+  .search-bar-container button {
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+
+  .book-card {
+    width: 90%;
+    max-width: 320px;
+  }
+
+  .book-info h3 {
+    font-size: 16px; /* Smaller font size for book titles on mobile */
+  }
+
+  .book-info p {
+    font-size: 12px; /* Adjusted font size for better mobile readability */
+  }
+
+  button, .genre-button {
+    font-size: 12px; /* Slightly smaller buttons for mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .search-bar-container {
+    margin-top: 10px;
+  }
+
+  .search-bar-container input[type="text"] {
+    max-width: 100%;
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  .search-bar-container button {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  body {
+    font-size: 14px; /* Adjust base font size for smaller screens */
+  }
+
+  .book-card {
+    width: 100%;
+    max-width: none; /* Ensures cards take up full width on very small screens */
+  }
+
+  .book-info h3 {
+    font-size: 14px; /* Adjust title size for smaller screens */
+  }
 }

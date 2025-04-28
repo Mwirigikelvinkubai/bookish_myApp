@@ -9,8 +9,6 @@ export const BookContext = createContext();
 export const useBookContext = () => useContext(BookContext);
 
 export const BookProvider = ({ children }) => {
-  const [query, setQuery] = useState('');
-  const { books: fetchedBooks, isLoading, error } = useFetchBooks(query);
   const [books, setBooks] = useState([]);
   const [wishlist, setWishlist] = useState([]);
 
@@ -18,21 +16,18 @@ export const BookProvider = ({ children }) => {
   const userId = user?.id;
 
   useEffect(() => {
-    setBooks(fetchedBooks);
-  }, [fetchedBooks]);
+    if (!userId) return; // Guard clause to ensure userId exists
 
-  useEffect(() => {
     const loadUserWishlist = async () => {
-      if (!userId) return;
       try {
-        const user = await fetchUser(userId); 
-        setWishlist(user.wishlist || []);
+        const userData = await fetchUser(userId); 
+        setWishlist(userData.wishlist || []);
       } catch (err) {
         console.error("Failed to load user wishlist:", err);
       }
     };
     loadUserWishlist();
-  }, [userId]);
+  }, [userId]); // Re-run when userId changes
 
   const addToWishlist = async (book) => {
     if (!userId) {
@@ -70,10 +65,6 @@ export const BookProvider = ({ children }) => {
       value={{
         books,
         setBooks,
-        query,
-        setQuery,
-        isLoading,
-        error,
         wishlist,
         setWishlist,
         addToWishlist,
@@ -87,3 +78,4 @@ export const BookProvider = ({ children }) => {
   );
 };
 
+export default BookContext;

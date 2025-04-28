@@ -1,26 +1,41 @@
-import React from "react";
-import { useBookContext } from "../context/BookContext";
-import BookGrid from "../components/BookGrid";
+import { useEffect, useState, useContext } from "react";
+import { BookContext } from "../context/BookContext";
+import useFetchBooks from "../hooks/UseFetch";
 import BookCard from "../components/BookCard";
-import Search from "../components/Search";
 
 const Home = () => {
-  const { books, query, setQuery, isLoading, error } = useBookContext()
+  const [query, setQuery] = useState("three body problem");
+  const { books, setBooks } = useContext(BookContext);
+  const { books: fetchedBooks, isLoading, error } = useFetchBooks(query);
+
+  // Sync fetched books into context state
+  useEffect(() => {
+    setBooks(fetchedBooks);
+  }, [fetchedBooks]);
 
   return (
-    <div className="p-6">
-      <Search query={query} setQuery={setQuery} />
+    <div>
+      {/* Search Bar Section */}
+      <div className="search-bar-container">
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search for books..."
+        />
+        <button onClick={() => {/* Button functionality can be added here */}}>Search</button>
+      </div>
 
-      {isLoading && <p className="text-center text-gray-400">Loading...</p>}
-      {error && <p className="text-center text-red-500">{error}</p>}
+      {/* Loading and Error Messages */}
+      {isLoading && <p>Loading...</p>}
+      {error && <p>{error}</p>}
 
-      <BookGrid>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "5rem" }}>
+      {/* Book Cards */}
+      <div className="book-card-container">
         {books.map((book) => (
           <BookCard key={book.key} book={book} />
         ))}
-        </div>
-      </BookGrid>
+      </div>
     </div>
   );
 };
