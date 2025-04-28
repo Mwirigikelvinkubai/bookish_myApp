@@ -1,12 +1,12 @@
 const addToUserWishlist = async (userId, book) => {
     try {
-      const res = await fetch(`http://localhost:3001/users/${userId}`);
+      const res = await fetch(`/api/users/${userId}`);
       if (!res.ok) throw new Error("Failed to fetch user");
       const user = await res.json();
   
       const updatedWishlist = [...(user.wishlist || []), book];
   
-      const patchRes = await fetch(`http://localhost:3001/users/${userId}`, {
+      const patchRes = await fetch(`/api/users/${userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

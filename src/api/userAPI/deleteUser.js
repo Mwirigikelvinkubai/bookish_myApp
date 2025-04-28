@@ -1,5 +1,5 @@
 const deleteUser = async (userId) => {
-    const res = await fetch(`http://localhost:3001/users/${userId}`, {
+    const res = await fetch(`/api/users/${userId}`, {
       method: 'DELETE'
     });
   
