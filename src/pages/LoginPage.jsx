@@ -10,17 +10,17 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+  
     try {
       // Find the user by username (or email)
-      const response = await fetch(`http://localhost:3001/users?username=${username}`);
+      const response = await fetch(`https://680f048c67c5abddd193916e.mockapi.io/bookishV1/users?username=${username}`);
       const users = await response.json();
-
+  
       if (users.length === 0) {
         alert("User not found");
         return;
       }
-
+  
       const user = users[0]; // Assuming unique username
       if (user.password === password) {
         setUser(user); // Set user context
@@ -33,6 +33,7 @@ const LoginPage = () => {
       alert("Login failed");
     }
   };
+  
 
   return (
     <div>

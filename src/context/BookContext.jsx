@@ -16,17 +16,18 @@ export const BookProvider = ({ children }) => {
   const userId = user?.id;
 
   useEffect(() => {
+    if (!userId) return; // Guard clause to ensure userId exists
+
     const loadUserWishlist = async () => {
-      if (!userId) return;
       try {
-        const user = await fetchUser(userId); 
-        setWishlist(user.wishlist || []);
+        const userData = await fetchUser(userId); 
+        setWishlist(userData.wishlist || []);
       } catch (err) {
         console.error("Failed to load user wishlist:", err);
       }
     };
     loadUserWishlist();
-  }, [userId]);
+  }, [userId]); // Re-run when userId changes
 
   const addToWishlist = async (book) => {
     if (!userId) {
