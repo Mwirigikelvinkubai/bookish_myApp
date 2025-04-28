@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
+import Fuse from "fuse.js";
 
 const useFetchBooks = (query) => {
   const [books, setBooks] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [debouncedQuery, setDebouncedQuery] = useState(query);
 
@@ -15,27 +16,31 @@ const useFetchBooks = (query) => {
     return () => clearTimeout(timer); // Clear the timeout on cleanup
   }, [query]);
 
-  // Fetching books based on the debounced query
   useEffect(() => {
-    if (!debouncedQuery) return;
-
     const fetchBooks = async () => {
+      if (!debouncedQuery) return;  // Don't fetch if query is empty
+
       setIsLoading(true);
+
       try {
-        const res = await fetch(
-          `https://openlibrary.org/search.json?q=${debouncedQuery}`
-        );
+        const res = await fetch(`https://openlibrary.org/search.json?q=${debouncedQuery}`);
         const data = await res.json();
 
-        console.log("API Response:", data); // Debugging line
-
-
-        // Handle empty results by setting an appropriate error message
         if (data.docs.length === 0) {
           setError("No books found for this search.");
+          setBooks([]);
         } else {
-          setBooks(data.docs);
-          setError(null); // Reset error if there are results
+          setError(null);
+          const fetchedBooks = data.docs;
+
+          // Apply Fuse.js for better search relevance
+          const fuse = new Fuse(fetchedBooks, {
+            keys: ['title', 'author'],
+            threshold: 0.3, // Adjust for relevance
+          });
+
+          const result = fuse.search(debouncedQuery);
+          setBooks(result.map(result => result.item)); // Extract matched books
         }
       } catch (err) {
         setError("Failed to fetch books");
@@ -45,11 +50,10 @@ const useFetchBooks = (query) => {
       }
     };
 
-    fetchBooks();
+    if (debouncedQuery) fetchBooks();  // Only fetch when query is not empty
   }, [debouncedQuery]);
 
   return { books, isLoading, error };
 };
 
 export default useFetchBooks;
-

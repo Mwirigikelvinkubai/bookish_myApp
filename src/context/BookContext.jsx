@@ -9,11 +9,17 @@ export const BookContext = createContext();
 export const useBookContext = () => useContext(BookContext);
 
 export const BookProvider = ({ children }) => {
+  const [query, setQuery] = useState('');
+  const { books: fetchedBooks, isLoading, error } = useFetchBooks(query);
   const [books, setBooks] = useState([]);
   const [wishlist, setWishlist] = useState([]);
 
   const { user } = useUser();
   const userId = user?.id;
+
+  useEffect(() => {
+    setBooks(fetchedBooks);
+  }, [fetchedBooks]);
 
   useEffect(() => {
     const loadUserWishlist = async () => {
@@ -64,6 +70,10 @@ export const BookProvider = ({ children }) => {
       value={{
         books,
         setBooks,
+        query,
+        setQuery,
+        isLoading,
+        error,
         wishlist,
         setWishlist,
         addToWishlist,
@@ -77,4 +87,3 @@ export const BookProvider = ({ children }) => {
   );
 };
 
-export default BookContext;

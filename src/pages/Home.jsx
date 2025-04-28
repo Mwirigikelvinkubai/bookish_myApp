@@ -1,34 +1,26 @@
-import { useEffect, useState, useContext } from "react";
-import { BookContext } from "../context/BookContext";
-import useFetchBooks from "../hooks/UseFetch";
+import React from "react";
+import { useBookContext } from "../context/BookContext";
+import BookGrid from "../components/BookGrid";
 import BookCard from "../components/BookCard";
+import Search from "../components/Search";
 
 const Home = () => {
-  const [query, setQuery] = useState("three body problem");
-  const { books, setBooks } = useContext(BookContext);
-  const { books: fetchedBooks, isLoading, error } = useFetchBooks(query);
-
-  // Sync fetched books into context state
-  useEffect(() => {
-    setBooks(fetchedBooks);
-  }, [fetchedBooks]);
+  const { books, query, setQuery, isLoading, error } = useBookContext()
 
   return (
-    <div>
-      <input
-        type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search for books..."
-      />
-      {isLoading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
+    <div className="p-6">
+      <Search query={query} setQuery={setQuery} />
 
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+      {isLoading && <p className="text-center text-gray-400">Loading...</p>}
+      {error && <p className="text-center text-red-500">{error}</p>}
+
+      <BookGrid>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "5rem" }}>
         {books.map((book) => (
           <BookCard key={book.key} book={book} />
         ))}
-      </div>
+        </div>
+      </BookGrid>
     </div>
   );
 };
