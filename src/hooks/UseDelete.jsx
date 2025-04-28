@@ -11,7 +11,7 @@ const useDeleteBook = () => {
         setErrorDelete(null)
 
         try {
-            const res = await fetch(`/api/books/${id}`, {
+            const res = await fetch(`http://localhost:3001/books/${id}`, {
                 method: "DELETE",
             })
 

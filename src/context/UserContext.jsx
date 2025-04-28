@@ -16,7 +16,7 @@ export const UserProvider = ({ children }) => {
       }
 
       try {
-        const res = await fetch(`/api/users/${userId}`);
+        const res = await fetch(`http://localhost:3001/users/${userId}`);
         if (!res.ok) throw new Error("User not found");
         const data = await res.json();
         setUser(data);

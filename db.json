@@ -331,6 +331,15 @@
           "title": "Harry Porter Trivia"
         }
       ]
+    },
+    {
+      "id": "974e",
+      "username": "tap",
+      "email": "ab@gmail.com",
+      "password": "password",
+      "firstName": "tap",
+      "lastName": "tap",
+      "wishlist": []
     }
   ],
   "wishlist": []

@@ -1,5 +1,5 @@
 const updateUser = async (userId, updatedInfo) => {
-    const res = await fetch(`/api/users/${userId}`, {
+    const res = await fetch(`http://localhost:3001/users/${userId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'

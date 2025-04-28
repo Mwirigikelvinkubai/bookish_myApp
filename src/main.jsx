@@ -9,7 +9,7 @@ import './components/App.css';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-      <UserProvider> {/* ✅ wrap App inside the UserProvider */}
+      <UserProvider>
         <App />
       </UserProvider>
     </BrowserRouter>
