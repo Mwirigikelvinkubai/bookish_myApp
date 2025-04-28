@@ -220,6 +220,107 @@
           "title": "The Three Body Problem"
         }
       ]
+    },
+    {
+      "id": "b54f",
+      "username": "user",
+      "email": "user@gmail.com",
+      "password": "1234567890",
+      "firstName": "User",
+      "lastName": "Stesh",
+      "wishlist": [
+        {
+          "author_key": [
+            "OL891613A"
+          ],
+          "author_name": [
+            "Christian Marchal"
+          ],
+          "cover_edition_key": "OL1878714M",
+          "cover_i": 10466693,
+          "edition_count": 1,
+          "first_publish_year": 1990,
+          "has_fulltext": false,
+          "key": "/works/OL4470971W",
+          "language": [
+            "eng"
+          ],
+          "public_scan_b": false,
+          "title": "The three-body problem"
+        }
+      ]
+    },
+    {
+      "id": "8996",
+      "username": "User",
+      "email": "user@gmail.com",
+      "password": "12345678901",
+      "firstName": "User",
+      "lastName": "James",
+      "wishlist": [
+        {
+          "author_key": [
+            "OL188486A"
+          ],
+          "author_name": [
+            "Mario Puzo"
+          ],
+          "cover_i": 6507069,
+          "edition_count": 109,
+          "first_publish_year": 1969,
+          "has_fulltext": true,
+          "ia": [
+            "derpateroman00puzo",
+            "krestnyiotetsrom0000puzo",
+            "elpadrino0000unse",
+            "elpadrino0000puzo",
+            "isbn_9788372001108",
+            "jiaofu0000puzo",
+            "leparrainroman0000puzo",
+            "depeetvader0000puzo",
+            "godfather0000unse_f1b4",
+            "godfather0000unse_x4c7",
+            "jiaofugodfather0082puzo",
+            "godfather1970puzo",
+            "godfather0000puzo_h3g3",
+            "godfatherbymario0000mari",
+            "godfather0000puzo_e6x3",
+            "godfather0000puzo",
+            "godfather0000puzo_r5r0",
+            "isbn_0451128915",
+            "godfather0000puzo_s8x5",
+            "isbn_9780099580164",
+            "godfather0000unse",
+            "godfather0000unse_i0r5",
+            "godfather0000unse_b4w0",
+            "godfather00puzo",
+            "godfather000puzo",
+            "isbn_9780099527855",
+            "godfather0000unse_k5g3",
+            "godfather0000unse_q1o5"
+          ],
+          "ia_collection_s": "americana;americanuniversity-ol;binghamton-ol;cnusd-ol;cua-ol;dartmouthlibrary-ol;delawarecountydistrictlibrary;drakeuniversity-ol;gwulibraries-ol;hamiltonpubliclibrary-ol;inlibrary;internetarchivebooks;library_of_atlantis;openlibrary-d-ol;popularchinesebooks;printdisabled;schroederlibrary-ol;the-claremont-colleges-ol;tulsacc-ol;udc-ol;unb-ol;uni-ol;universityofoklahoma-ol;wilsoncollege-ol;worthingtonlibraries-ol",
+          "key": "/works/OL1673205W",
+          "language": [
+            "dut",
+            "ger",
+            "ita",
+            "eng",
+            "fre",
+            "rus",
+            "vie",
+            "enm",
+            "chi",
+            "spa",
+            "jpn",
+            "pol"
+          ],
+          "lending_edition_s": "OL49817239M",
+          "lending_identifier_s": "derpateroman00puzo",
+          "public_scan_b": false,
+          "title": "The Godfather"
+        }
+      ]
     }
   ],
   "wishlist": []
