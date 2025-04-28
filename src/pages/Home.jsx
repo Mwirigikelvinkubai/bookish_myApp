@@ -15,16 +15,23 @@ const Home = () => {
 
   return (
     <div>
-      <input
-        type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search for books..."
-      />
+      {/* Search Bar Section */}
+      <div className="search-bar-container">
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search for books..."
+        />
+        <button onClick={() => {/* Button functionality can be added here */}}>Search</button>
+      </div>
+
+      {/* Loading and Error Messages */}
       {isLoading && <p>Loading...</p>}
       {error && <p>{error}</p>}
 
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+      {/* Book Cards */}
+      <div className="book-card-container">
         {books.map((book) => (
           <BookCard key={book.key} book={book} />
         ))}

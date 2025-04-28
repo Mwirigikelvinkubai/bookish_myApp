@@ -4,6 +4,7 @@ import AppRouter from "./router/AppRouter";
 import { BookProvider } from "./context/BookContext";
 import useFetchBooks from "./hooks/UseFetch"; 
 import AddBookForm from './components/AddBookForm';
+import './components/App.css';
 
 function App() {
   const [query, setQuery] = useState("");  // Query state for searching books
