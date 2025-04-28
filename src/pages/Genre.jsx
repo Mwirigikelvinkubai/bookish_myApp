@@ -57,7 +57,7 @@ const Genre = () => {
               books.map((book) => (
                 <div
                   key={book.key}
-                  className="bg-gray-800 p-4 gap-x-5 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center"
+                  className="bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center"
                 >
                   {book.cover_i && (
                     <img
