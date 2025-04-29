@@ -1,57 +1,77 @@
 import { useState, useEffect } from "react";
 import Fuse from "fuse.js";
 
-
 const useFetchBooks = (query) => {
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [debouncedQuery, setDebouncedQuery] = useState(query);
 
-  // Debouncing the query to avoid rapid API calls
+  // Debounce only for text search (not genre)
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedQuery(query);
-    }, 500);
-
-    return () => clearTimeout(timer); // Clear the timeout on cleanup
+    if (!query) return;
+    
+    if (query.startsWith("subject=")) {
+      setDebouncedQuery(query); // No debounce needed for genre
+    } else {
+      const timer = setTimeout(() => {
+        setDebouncedQuery(query);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
   }, [query]);
 
   useEffect(() => {
     const fetchBooks = async () => {
-      if (!debouncedQuery) return;  // Don't fetch if query is empty
+      if (!debouncedQuery) return; //Don't fetch if query is empty
 
       setIsLoading(true);
+      setError(null);
 
       try {
-        const res = await fetch(`https://openlibrary.org/search.json?q=${debouncedQuery}`);
-        const data = await res.json();
+        let url;
+        let fetchedBooks = [];
 
-        if (data.docs.length === 0) {
-          setError("No books found for this search.");
-          setBooks([]);
+        if (debouncedQuery.startsWith("subject=")) {
+          const genre = debouncedQuery.split("=")[1].toLowerCase();
+          url = `https://openlibrary.org/subjects/${genre}.json`;
+
+          const res = await fetch(url);
+          const data = await res.json();
+          fetchedBooks = data.works || [];
+
         } else {
-          setError(null);
-          const fetchedBooks = data.docs;
+          url = `https://openlibrary.org/search.json?q=${debouncedQuery}`;
+          const res = await fetch(url);
+          const data = await res.json();
+          fetchedBooks = data.docs || [];
 
-          // Apply Fuse.js for better search relevance
+          // Apply Fuse.js for better search matching
           const fuse = new Fuse(fetchedBooks, {
             keys: ['title', 'author'],
-            threshold: 0.3, // Adjust for relevance
+            threshold: 0.3,
           });
 
           const result = fuse.search(debouncedQuery);
-          setBooks(result.map(result => result.item)); // Extract matched books
+          fetchedBooks = result.map(result => result.item);
         }
+
+        if (fetchedBooks.length === 0) {
+          setError("No books found.");
+          setBooks([]);
+        } else {
+          setBooks(fetchedBooks);
+        }
+
       } catch (err) {
-        setError("Failed to fetch books");
+        setError("Failed to fetch books.");
         setBooks([]);
       } finally {
         setIsLoading(false);
       }
     };
 
-    if (debouncedQuery) fetchBooks();  // Only fetch when query is not empty
+    fetchBooks();
   }, [debouncedQuery]);
 
   return { books, isLoading, error };

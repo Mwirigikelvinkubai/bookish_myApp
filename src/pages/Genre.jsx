@@ -1,28 +1,12 @@
 import React, { useState } from 'react';
 import GenreButton from '../components/GenreButton';
 import useFetchBooks from '../hooks/UseFetch';
-import BookInfo from '../components/BookInfo';
-import BookLanguages from '../components/BookLanguages';
-import ReadOnlineButton from '../components/ReadOnlineButton';
-import WishlistButton from '../components/WishlistButton';
+import BookCard from '../components/BookCard'; // Import BookCard component
 
+// Genres array
 const genres = [
-  { label: 'Action', subject: 'Action' },
-  { label: 'Adventure', subject: 'Adventure' },
-  { label: 'Animation', subject: 'Animation' },
-  { label: 'Biography', subject: 'Biography' },
-  { label: 'Comedy', subject: 'Comedy' },
-  { label: 'Crime', subject: 'Crime' },
-  { label: 'Documentary', subject: 'Documentary' },
-  { label: 'Drama', subject: 'Drama' },
-  { label: 'Fantasy', subject: 'Fantasy' },
-  { label: 'Horror', subject: 'Horror' },
-  { label: 'Mystery', subject: 'Mystery' },
-  { label: 'Romance', subject: 'Romance' },
-  { label: 'Sci-Fi', subject: 'Science fiction' },
-  { label: 'Thriller', subject: 'Thriller' },
-  { label: 'Western', subject: 'Western' },
-  { label: 'Fairy-Tale', subject: 'Fairy tales' },
+  'Action','Adventure','Animation','Biography','Comedy','Crime','Documentary',
+  'Drama','Fantasy','Horror','Mystery','Romance','Sci-Fi','Thriller','Western','Fairy-Tale',
 ];
 
 const Genre = () => {
@@ -31,18 +15,18 @@ const Genre = () => {
     selectedGenre ? `subject=${selectedGenre}` : null
   );
 
-  const handleGenreSelect = (subject) => {
-    setSelectedGenre(subject);
+  const handleGenreSelect = (genre) => {
+    setSelectedGenre(genre);
   };
 
   const renderGenres = () => (
     <div className="flex flex-wrap gap-4 justify-center my-6">
-      {genres.map(({ label, subject }) => (
+      {genres.map((genre) => (
         <GenreButton
-          key={subject}
-          genre={label}
-          onClick={() => handleGenreSelect(subject)}
-          className="bg-gray-800 text-white rounded-full px-6 py-2 hover:bg-red-600 transition-colors duration-300"
+          key={genre}
+          genre={genre}
+          onClick={() => handleGenreSelect(genre)}
+          className="bg-gray-800 text-white rounded-full px-6 py-2 hover:bg-red-600"
         />
       ))}
     </div>
@@ -58,35 +42,7 @@ const Genre = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {books.length > 0 ? (
           books.map((book) => (
-            <div
-              key={book.key}
-              className="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col items-center p-4 transition-transform hover:scale-105"
-            >
-              {book.cover_i ? (
-                <img
-                  src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
-                  alt={book.title}
-                  className="w-full h-60 object-cover mb-4"
-                />
-              ) : (
-                <div className="w-full h-60 bg-gray-300 flex items-center justify-center text-gray-700 mb-4">
-                  No Image
-                </div>
-              )}
-
-              <BookInfo 
-                title={book.title} 
-                authors={book.author_name} 
-                year={book.first_publish_year} 
-              />
-
-              <BookLanguages languages={book.language} />
-
-              <div className="flex gap-2 mt-4">
-                <ReadOnlineButton book={book} />
-                <WishlistButton book={book} />
-              </div>
-            </div>
+            <BookCard key={book.key} book={book} />
           ))
         ) : (
           <p className="text-center text-gray-600">No books found in this genre.</p>
@@ -105,3 +61,4 @@ const Genre = () => {
 };
 
 export default Genre;
+
